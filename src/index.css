@@ -1,0 +1,44 @@
+body {
+  font-family: "Nunito", sans-serif;
+}
+#chess {
+  /* z-index: 1;
+  position: absolute; */
+}
+#notations {
+  display: block;
+}
+
+#board div {
+  width: 80px;
+  height: 80px;
+  border: 1px solid #846348;
+  float: left;
+  background-color: #b58863;
+}
+
+#board div:nth-of-type(16n + 16),
+#board div:nth-of-type(16n + 14),
+#board div:nth-of-type(16n + 12),
+#board div:nth-of-type(16n + 10),
+#board div:nth-of-type(16n + 7),
+#board div:nth-of-type(16n + 5),
+#board div:nth-of-type(16n + 3),
+#board div:nth-of-type(16n + 1) {
+  background-color: #f0d9b5;
+}
+
+#board div:nth-of-type(8n + 1) {
+  clear: left;
+}
+
+#chess .notation {
+  /* z-index: 2;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); */
+  color: #900606;
+  font-size: 100px;
+  opacity: 0.7;
+}
