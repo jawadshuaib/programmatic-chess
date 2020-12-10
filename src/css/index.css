@@ -42,3 +42,24 @@ body {
   font-size: 100px;
   opacity: 0.7;
 }
+
+@media screen and (max-width: 800px) {
+  #board div {
+    width: 60px;
+    height: 60px;
+  }
+}
+
+@media screen and (max-width: 550px) {
+  #board div {
+    width: 40px;
+    height: 40px;
+  }
+}
+
+@media screen and (max-width: 350px) {
+  #board div {
+    width: 25px;
+    height: 25px;
+  }
+}
