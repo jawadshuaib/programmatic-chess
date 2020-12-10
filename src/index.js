@@ -1,19 +1,19 @@
 
-import Board from './board';
-import Pieces from './pieces';
-import Notation from './notation';
-import './index.css';
-import './pieces.css';
+import Board from './classes/board';
+import Pieces from './classes/pieces';
+import Notation from './classes/notation';
+import './css/index.css';
+import './css/pieces.css';
 
-// Draw the chess board
+// Draw an empty chess board
 const board = new Board ('board');
 const {boardEl} = board.props();
 board.draw ();
 
 // Arrange the pieces either as White or Black
 const playAs = "white";
-const pieces = new Pieces (playAs);
-pieces.arrange ();
+const pieces = new Pieces (boardEl, playAs);
+pieces.clear().arrange ().flip();
 
 // Class to generate random notations
 const notation = new Notation (board);

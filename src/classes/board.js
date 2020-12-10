@@ -17,7 +17,7 @@ class Board {
   }
 
   draw () {
-    const {boardEl, cols, totalSquares} = this.props();
+    const { boardEl, cols, totalSquares } = this.props();
     let square, col, row, k = 0, m=totalSquares;
     
     // Create squares and assign appropriate positional notation
@@ -35,13 +35,17 @@ class Board {
         row = m/cols.length;
       }  
     
-      square = document.createElement ('div');
-      square.classList.add ('square');
-      square.id = `square-${col}${row}`;   
-    
-      boardEl.appendChild(square);
+      const uniqueID = `${boardEl.id}-square-${col}${row}`;
+      
+      if (document.getElementById (uniqueID) === null) {
+        square = document.createElement ('div');
+        square.classList.add ('square');
+        square.id = uniqueID;
+      
+        boardEl.appendChild(square);
+      }
 
-      // to count rows backwards
+      // To count rows backwards
       m--;
     }    
   }

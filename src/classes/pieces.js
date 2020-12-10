@@ -1,6 +1,9 @@
 // We use this class to place the pieces on specific spots
 // i.e. Rook on A3
 class Piece {
+  constructor (boardEl) {
+    this.boardEl = boardEl;
+  }
   props () {
     const pieces = [
       {
@@ -29,8 +32,8 @@ class Piece {
       }                     
     ];
     const colors = ['black', 'white'];
-
-    return { pieces, colors}
+    const boardEl = this.boardEl;
+    return { boardEl, pieces, colors}
   }
 
   // create a class name based on piece and color
@@ -45,9 +48,10 @@ class Piece {
 
   place (color, alias, position) {
     position = position.toLowerCase ();
-    
+    const { boardEl } = this.props ();
+
     const className = this.className (color, alias);
-    const squareID = `square-${position}`;    
+    const squareID = `${boardEl.id}-square-${position}`;    
     const squareEl = document.getElementById (squareID);
     
     squareEl.classList.add (className);  
@@ -57,18 +61,25 @@ class Piece {
 // This class arranges the pieces on the board based on whether the game is being played
 // from Black or White's perspective
 class Pieces extends Piece {
-  constructor (playAs) {
-    super ();
-    playAs = playAs || 'white';  
-      
+
+  constructor (boardEl, playAs) {
+    
+    if (boardEl.length === null)
+      throw 'Incorrect board element provided for configuration.';
+
+    super (boardEl);
+    this.boardEl = boardEl;
+    
+    playAs = playAs || 'white';    
     const { colors } = this.props ();
-    if (colors.includes (playAs)) {
-      this.playAs = playAs;
+    if (!colors.includes (playAs)) {
+      throw 'Invalid color provided. You can either play as Black or White.';    
     } else {
-      throw 'Invalid color provided. You can either play as Black or White.'
-    }
+      this.playAs = playAs;
+    }    
   }
-  arrangement () {
+
+  preset () {
     const arrangement = [
       {
         playAs: 'white',
@@ -83,8 +94,22 @@ class Pieces extends Piece {
     ]
     return arrangement;
   }
+
+  // Flip the pieces on the board
+  flip () {        
+    const { colors } = this.props ();    
+    const newColor = colors.filter (color => this.playAs !== color)[0];
+    this.playAs = newColor;
+    
+    this.clear ();
+    this.arrange ();
+
+    return this;
+  }
+
   arrange () {
-    const arrangement = this.arrangement ().filter (el => el.playAs == this.playAs)[0];
+    
+    const arrangement = this.preset ().filter (el => el.playAs == this.playAs)[0];
     
     // Arrange white pieces
     arrangement.whiteArrangement.forEach (piecePosition => {
@@ -97,10 +122,28 @@ class Pieces extends Piece {
       const { piece, position } = this.getPieceInfo (piecePosition);
       this.place ('black', piece, position);
     });    
+
+    return this;
   }
+
+  // Remove all the pieces on the board
+  clear () {
+    const { boardEl } = this.props();
+    const squareClass = 'square';
+    
+    boardEl.querySelectorAll ('div').forEach (square => {      
+      const classes = square.classList;
+      classes.forEach (thisClass => {
+        if (thisClass !== squareClass) 
+          square.classList.remove (thisClass);        
+      });      
+    });
+
+    return this;
+  }  
+
   // Split positions (i.e. rb1 ---> { r, b1 })
-  getPieceInfo (piecePosition) {
-    const piecePositionArr = piecePosition.split ('');
+  getPieceInfo (piecePosition) {    
     const piece = piecePosition[0];
     const position = `${piecePosition[1]}${piecePosition[2]}`;
 
