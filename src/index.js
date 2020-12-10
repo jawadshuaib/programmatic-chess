@@ -12,21 +12,9 @@ pieces.arrange ({
 
 
 
-// import Notation from './classes/notation';
-
-
-// Draw an empty chess board
-// const board = new Board ('board');
-// const {boardEl} = board.props();
-// board.draw ();
-
-// // Arrange the pieces either as White or Black
-// const playAs = "white";
-// const pieces = new Pieces (boardEl, playAs);
-// pieces.clear().arrange ().flip();
-
 /*
 // Class to generate random notations
+// import Notation from './classes/notation';
 const notation = new Notation (board);
 
 let i = 0;

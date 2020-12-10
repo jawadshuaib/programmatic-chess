@@ -1,5 +1,8 @@
 body {
   font-family: "Nunito", sans-serif;
+  background-color: #edebe9;
+  display: flex;
+  justify-content: center;
 }
 #chess {
   /* z-index: 1;
@@ -9,7 +12,7 @@ body {
   display: block;
 }
 
-#board div {
+.layout div {
   width: 80px;
   height: 80px;
   border: 1px solid #846348;
@@ -17,18 +20,18 @@ body {
   background-color: #b58863;
 }
 
-#board div:nth-of-type(16n + 16),
-#board div:nth-of-type(16n + 14),
-#board div:nth-of-type(16n + 12),
-#board div:nth-of-type(16n + 10),
-#board div:nth-of-type(16n + 7),
-#board div:nth-of-type(16n + 5),
-#board div:nth-of-type(16n + 3),
-#board div:nth-of-type(16n + 1) {
+.layout div:nth-of-type(16n + 16),
+.layout div:nth-of-type(16n + 14),
+.layout div:nth-of-type(16n + 12),
+.layout div:nth-of-type(16n + 10),
+.layout div:nth-of-type(16n + 7),
+.layout div:nth-of-type(16n + 5),
+.layout div:nth-of-type(16n + 3),
+.layout div:nth-of-type(16n + 1) {
   background-color: #f0d9b5;
 }
 
-#board div:nth-of-type(8n + 1) {
+.layout div:nth-of-type(8n + 1) {
   clear: left;
 }
 
@@ -44,21 +47,21 @@ body {
 }
 
 @media screen and (max-width: 800px) {
-  #board div {
+  .layout div {
     width: 60px;
     height: 60px;
   }
 }
 
 @media screen and (max-width: 550px) {
-  #board div {
+  .layout div {
     width: 40px;
     height: 40px;
   }
 }
 
 @media screen and (max-width: 350px) {
-  #board div {
+  .layout div {
     width: 25px;
     height: 25px;
   }

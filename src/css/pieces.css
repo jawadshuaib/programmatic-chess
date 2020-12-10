@@ -1,4 +1,4 @@
-#board .square {
+.layout .square {
   background-size: 90%;
   background-position: center;
   background-repeat: no-repeat;
