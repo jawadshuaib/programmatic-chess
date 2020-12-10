@@ -1,20 +1,31 @@
 
-import Board from './classes/board';
-import Pieces from './classes/pieces';
-import Notation from './classes/notation';
-import './css/index.css';
-import './css/pieces.css';
+import { board, pieces } from './classes/controller';
+
+board.draw ();
+pieces.arrange ();
+
+board.flip();
+pieces.arrange ({
+  whiteArrangement: ['na1','bc1'],
+  blackArrangement: ['rh8', 'bc3']
+});
+
+
+
+// import Notation from './classes/notation';
+
 
 // Draw an empty chess board
-const board = new Board ('board');
-const {boardEl} = board.props();
-board.draw ();
+// const board = new Board ('board');
+// const {boardEl} = board.props();
+// board.draw ();
 
-// Arrange the pieces either as White or Black
-const playAs = "white";
-const pieces = new Pieces (boardEl, playAs);
-pieces.clear().arrange ().flip();
+// // Arrange the pieces either as White or Black
+// const playAs = "white";
+// const pieces = new Pieces (boardEl, playAs);
+// pieces.clear().arrange ().flip();
 
+/*
 // Class to generate random notations
 const notation = new Notation (board);
 
@@ -51,3 +62,4 @@ boardEl.addEventListener ('click', square => {
     console.log (`Wrong guess ${myGuess}`);
   }  
 });
+*/

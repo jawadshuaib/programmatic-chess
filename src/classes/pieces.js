@@ -96,20 +96,25 @@ class Pieces extends Piece {
   }
 
   // Flip the pieces on the board
-  flip () {        
-    const { colors } = this.props ();    
-    const newColor = colors.filter (color => this.playAs !== color)[0];
-    this.playAs = newColor;
+  // flip () {        
+  //   const { colors } = this.props ();    
+  //   const newColor = colors.filter (color => this.playAs !== color)[0];
+  //   this.playAs = newColor;
     
-    this.clear ();
-    this.arrange ();
+  //   this.clear ();
+  //   this.arrange ();
 
-    return this;
-  }
+  //   return this;
+  // }
 
-  arrange () {
+  arrange (arrangement) {
     
-    const arrangement = this.preset ().filter (el => el.playAs == this.playAs)[0];
+    arrangement = arrangement || this.preset ().filter (el => el.playAs == this.playAs)[0];
+    // if (arrangement === null) {
+    //   this.preset ().filter (el => el.playAs == this.playAs)[0];
+    // } else {
+
+    // }
     
     // Arrange white pieces
     arrangement.whiteArrangement.forEach (piecePosition => {
