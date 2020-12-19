@@ -9,7 +9,7 @@ npm-debug.log*
 # Optional npm cache directory
 .npm
 
-.DS_Store
+**/.DS_Store
 
 # Firebase
 .firebase/
