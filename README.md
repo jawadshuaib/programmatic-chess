@@ -1,12 +1,18 @@
 Use this code to create programmatic chess using Javascript and Node.js.
 
-![](screenshot.png)
+![](screenshot-1.png)
 
-You can place pieces on the board using JavaScript and also detect which piece the player has clicked.
-
-This templated code basically provides all the functionality of a Chess board but leaves out "Legal Moves" and "AI". Those can be incorporated as desired using other third party modules.
+You can drag-and-drop pieces or place them on the board using JavaScript and also detect which piece the player has clicked.
 
 The board can be arranged from both perspectives: black or white.
+
+![](screenshot-2.png)
+
+You can also provide Chess notations to pre-set the piece arrangement.
+
+![](screenshot-3.png)
+
+This templated code basically provides all the functionality of a Chess board but leaves out "Legal Moves" and "AI". Those can be incorporated as desired using other third party modules.
 
 Once the repository is cloned, simply run the following commands:
 
