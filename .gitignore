@@ -10,5 +10,6 @@ npm-debug.log*
 .npm
 
 # Firebase
+*.firebase
 .firebaserc
 firebase.json
