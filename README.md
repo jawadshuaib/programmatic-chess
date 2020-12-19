@@ -1,6 +1,12 @@
-This is boilerplate code to quickly setup a webpack and babel environment for javascript projects. The configuration is also setup to update the production files whenever the code is updated.
+Use this code to create programmatic chess using Javascript and Node.js.
 
-Note the environment setup also supports css. Webpack will output any css files to the index.html within the style tags for production. To use the css files in this manner, you must also import them into the javascript file (i.e. import '/.sample.css';). An example is provided in index.js
+![](screenshot-1.png)
+
+You can place pieces on the board using JavaScript and also detect which piece the player has clicked.
+
+This templated code basically provides all the functionality of a Chess board but leaves out "Legal Moves" and "AI". Those can be incorporated as desired using other third party modules.
+
+The board can be arranged from both perspectives: black or white.
 
 Once the repository is cloned, simply run the following commands:
 

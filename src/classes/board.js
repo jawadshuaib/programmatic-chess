@@ -52,7 +52,7 @@ class Board {
 
       const uniqueID = `${boardEl.id}-square-${col}${flipIt === true ? cols.length+1-row : row}`;      
       square = document.createElement ('div');
-      square.classList.add ('square');
+      square.classList.add ('square');      
       square.id = uniqueID;
     
       boardEl.appendChild(square);
