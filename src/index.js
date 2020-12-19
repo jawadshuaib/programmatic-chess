@@ -1,7 +1,7 @@
 
 import { Board, Pieces } from './classes/controller';
 
-// Create an empty chess board
+// Create a chess board object
 const board = new Board ('board');
 const {boardEl} = board.props();
 
@@ -13,7 +13,9 @@ const pieces = new Pieces (boardEl, playAs, draggable);
 board.draw ();
 pieces.arrange ();
 
+// Programmatically flip the board
 // board.flip();
+
 // Arrange pieces on the board. If an empty arrangement is parsed, it will
 // setup a default arrangement
 // pieces.arrange ({

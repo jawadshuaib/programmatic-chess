@@ -1,5 +1,7 @@
 Use this code to create programmatic chess using Javascript and Node.js.
 
+View a live version here: https://chess-trainer-be18a.firebaseapp.com/
+
 ![](screenshot-1.png)
 
 You can drag-and-drop pieces or place them on the board using JavaScript and also detect which piece the player has clicked.
