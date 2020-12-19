@@ -1,6 +1,6 @@
 Use this code to create programmatic chess using Javascript and Node.js.
 
-![](screenshot-1.png)
+![](screenshot.png)
 
 You can place pieces on the board using JavaScript and also detect which piece the player has clicked.
 
