@@ -36,18 +36,20 @@ class Moves extends Move {
       // Move dragged elem to the selected drop target
       const thisEl = e.target;
       if ((thisEl.classList.contains (['square'])) || (thisEl.classList.contains (['piece']))) {
-        
-        // If the piece is dragged over another piece, it should be removed  
-        if (thisEl.classList.contains ('piece')) {      
-          thisEl.src = this.dragged.src;
-        }
-    
-        const pieceName = [...this.dragged.parentElement.classList].find (thisClass => thisClass !== 'square');      
-        const prevSquareClass = this.dragged.parentElement.classList.value = 'square';
-        
+                        
         if (self.canMove(this.dragged, thisEl)) {
+          // If the piece is dragged over another piece, it should be removed  
+          if (thisEl.classList.contains ('piece')) {      
+            thisEl.src = this.dragged.src;
+            thisEl.classList = this.dragged.classList;
+            thisEl.dataset.color = this.dragged.dataset.color;
+          }
+      
           // Switch the move to the other player
           self.switchMove();
+
+          const pieceName = [...this.dragged.parentElement.classList].find (thisClass => thisClass !== 'square');      
+          const prevSquareClass = this.dragged.parentElement.classList.value = 'square';
 
           // Remove class for the piece from the previous space
           this.dragged.classList.remove (prevSquareClass);
@@ -62,8 +64,8 @@ class Moves extends Move {
   // Toggle between black or white after each move
   switchMove () {
     const { colors } = this.props ();
-    const newColor = colors.find (m=>m!=this.currentColor);  
-
+    const newColor = colors.find (m=>m!=this.currentColor);        
+    
     const currentEls = this.boardEl.getElementsByClassName (this.currentColor);
     const newEls = this.boardEl.getElementsByClassName (newColor);
 
@@ -105,9 +107,10 @@ class Moves extends Move {
     return false;
   }
   isMovingToSameColor (prevEl, newEl) {
-    const prevColor = this.pieceColor (prevEl);
-    if (this.squareHasPiece (newEl)) {
-      if (prevColor === this.pieceColor (newEl)) {
+    const prevColor = this.pieceColor (prevEl); 
+
+    if (this.squareHasPiece (newEl)) {      
+      if (prevColor === this.pieceColor (newEl)) {        
         return true;
       }
     }    
@@ -119,7 +122,7 @@ class Moves extends Move {
       return false;
     }
     // Piece not allowed to occupy a space already occupied by same colored piece
-    if (this.isMovingToSameColor (prevEl, newEl)) {
+    if (this.isMovingToSameColor (prevEl, newEl)) {      
       return false;
     }
     return true;
