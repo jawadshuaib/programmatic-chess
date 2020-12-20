@@ -87,13 +87,14 @@ class Piece {
     const imgEl = document.createElement ('img');
     
     imgEl.src = img;    
-    if (color === 'white') {
-      imgEl.setAttribute ("draggable", this.draggable);    
-    } else {
-      imgEl.setAttribute ("draggable", false);    
-    }      
-    if (this.draggable)
-      imgEl.classList.add ('draggable');          
+    if (this.draggable) {
+      if (color === 'white') {
+        imgEl.setAttribute ("draggable", this.draggable);    
+        imgEl.classList.add ('draggable');
+      } else {
+        imgEl.setAttribute ("draggable", false);    
+      } 
+    }                  
     imgEl.classList.add ('piece');
     imgEl.classList.add (color);
     imgEl.setAttribute ('data-color', color);

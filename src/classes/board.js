@@ -19,7 +19,7 @@ class Board {
   // Flip the board upside down
   flip () {
     const flipIt = !this.flipped;    
-    this.flipped = flipIt;
+    this.flipped = flipIt;    
     this.draw (flipIt);
   }
 
@@ -32,7 +32,7 @@ class Board {
     // Reverse the columns (i.e. a,b,c,d ---> d,c,b,a)
     if (flipIt)
       cols.reverse();
-
+    
     // Create squares and assign appropriate positional notation
     for (let i=0;i<totalSquares;i++) {
       
@@ -49,7 +49,7 @@ class Board {
       if (i % cols.length === 0) {
         row = m/cols.length;
       }  
-
+      
       const uniqueID = `${boardEl.id}-square-${col}${flipIt === true ? cols.length+1-row : row}`;      
       square = document.createElement ('div');
       square.classList.add ('square');      

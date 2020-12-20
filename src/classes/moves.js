@@ -68,9 +68,15 @@ class Moves extends Move {
     const newEls = this.boardEl.getElementsByClassName (newColor);
 
     // Make pieces of the other player draggable after the move
-    Array.from (currentEls).forEach (img => img.setAttribute ('draggable', false));
-    Array.from (newEls).forEach (img => img.setAttribute ('draggable', true));
-
+    Array.from (currentEls).forEach (img => {
+      img.setAttribute ('draggable', false);
+      img.classList.toggle ('draggable');
+    });
+    Array.from (newEls).forEach (img => { 
+      img.setAttribute ('draggable', true);
+      img.classList.toggle ('draggable');
+    });
+    
     // Switch to color to the other player
     this.currentColor = newColor;  
   }

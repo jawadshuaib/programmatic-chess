@@ -17,6 +17,7 @@ new Moves (boardEl, pieces.playAs);
 
 // Programmatically flip the board
 // board.flip();
+// pieces.arrange ();
 
 // Arrange pieces on the board. If an empty arrangement is parsed, it will
 // setup a default arrangement
