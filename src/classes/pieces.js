@@ -86,12 +86,17 @@ class Piece {
     const squareEl = document.getElementById (squareID);    
     const imgEl = document.createElement ('img');
     
-    imgEl.src = img;
-    imgEl.setAttribute ("draggable", this.draggable);    
+    imgEl.src = img;    
+    if (color === 'white') {
+      imgEl.setAttribute ("draggable", this.draggable);    
+    } else {
+      imgEl.setAttribute ("draggable", false);    
+    }      
     if (this.draggable)
       imgEl.classList.add ('draggable');          
-    imgEl.classList.add ('piece');  
-    imgEl.setAttribute ('data-player', color);
+    imgEl.classList.add ('piece');
+    imgEl.classList.add (color);
+    imgEl.setAttribute ('data-color', color);
     squareEl.appendChild (imgEl);
     squareEl.classList.add (className);  
   }
@@ -111,7 +116,7 @@ class Pieces extends Piece {
     super (boardEl, draggable);
     this.boardEl = boardEl;
     
-    playAs = playAs || 'white';    
+    playAs = playAs || 'white';
     const { colors } = this.props ();
     if (!colors.includes (playAs)) {
       throw 'Invalid color provided. You can either play as Black or White.';    

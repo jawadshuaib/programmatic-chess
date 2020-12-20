@@ -1,5 +1,5 @@
 
-import { Board, Pieces } from './classes/controller';
+import { Board, Pieces, Moves } from './classes/controller';
 
 // Create a chess board object
 const board = new Board ('board');
@@ -13,6 +13,8 @@ const pieces = new Pieces (boardEl, playAs, draggable);
 board.draw ();
 pieces.arrange ();
 
+new Moves (boardEl, pieces.playAs);
+
 // Programmatically flip the board
 // board.flip();
 
@@ -22,39 +24,6 @@ pieces.arrange ();
 //   whiteArrangement: ['na1','bc1'],
 //   blackArrangement: ['rh8', 'bc3']
 // });
-
-let dragged;
-boardEl.addEventListener('dragstart', function(e) { 
-  dragged = e.target;
-}, false);
-
-// Events fired on the drop targets
-boardEl.addEventListener('dragover', function(e) {
-  e.preventDefault();  
-}, false);
-
-boardEl.addEventListener('drop', function(e) {
-  // Move dragged elem to the selected drop target
-  const thisEl = e.target;
-  if ((thisEl.classList.contains (['square'])) || (thisEl.classList.contains (['piece']))) {
-    
-    // If the piece is dragged over another piece, it should be removed  
-    if (thisEl.classList.contains ('piece')) {      
-      thisEl.src = dragged.src;
-    }
-
-    const pieceName = [...dragged.parentElement.classList].find (thisClass => thisClass !== 'square');      
-    const prevSquareClass = dragged.parentElement.classList.value = 'square';
-
-    // Remove class for the piece from the previous space
-    dragged.classList.remove (prevSquareClass);
-    // Add the piece to the new space on the board
-    thisEl.appendChild (dragged);
-    // Add class for the piece to the new space
-    thisEl.classList.add (pieceName);      
-  }
-}, false);
-
 
 /*
 // Class to generate random notations
