@@ -15,3 +15,6 @@ npm-debug.log*
 .firebase/
 .firebaserc
 firebase.json
+
+# Other project
+classes/notation.js
