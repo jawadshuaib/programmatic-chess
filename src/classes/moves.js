@@ -1,3 +1,5 @@
+import Pieces from './pieces';
+
 class Move {
   constructor (boardEl) {
     this.boardEl = boardEl;
@@ -14,6 +16,7 @@ class Move {
       e.preventDefault();  
     }, false);
   } 
+
   props () {
     const colors = ['black', 'white'];
     return { colors };
@@ -21,14 +24,32 @@ class Move {
 }
 
 class Moves extends Move {
+  set moveNumber (v) {        
+    this._moveNumber = v;    
+  }
+  get moveNumber () {
+    return this._moveNumber === undefined || this._moveNumber < 0 ? 0 : this._moveNumber;
+  }
+  set arrangementHistory (v) {    
+    if (this._arrangementHistory === undefined) {
+      this._arrangementHistory = new Array (v);
+    } else {
+      this._arrangementHistory.push (v);
+    }    
+  }  
+  get arrangementHistory () {
+    return this._arrangementHistory;
+  }  
+
   constructor (boardEl, playAs) {
     super (boardEl);
 
     this.boardEl = boardEl;   
     this.playAs = playAs;
-    this.currentColor = this.playAs;
+    this.currentColor = this.playAs;    
     this.setupDrop ();        
   }
+
   setupDrop () {
     const self = this;
     this.boardEl.addEventListener('drop', function(e) {
@@ -38,13 +59,16 @@ class Moves extends Move {
       if ((thisEl.classList.contains (['square'])) || (thisEl.classList.contains (['piece']))) {
                         
         if (self.canMove(this.dragged, thisEl)) {
+          // Save arrangement of all the pieces
+          self.saveArrangement ();
+
           // If the piece is dragged over another piece, it should be removed  
           if (thisEl.classList.contains ('piece')) {      
             thisEl.src = this.dragged.src;
             thisEl.classList = this.dragged.classList;
             thisEl.dataset.color = this.dragged.dataset.color;
           }
-      
+       
           // Switch the move to the other player
           self.switchMove();
 
@@ -57,12 +81,36 @@ class Moves extends Move {
           thisEl.appendChild (this.dragged);
           // Add class for the piece to the new space
           thisEl.classList.add (pieceName);
+          
+          // Increment move
+          self.incrementMoveNumber ();          
         }       
       }
     }, false);
-  }  
+  } 
+
+  incrementMoveNumber () {
+    this.moveNumber += 1;    
+  }
+  
+  decrementMoveNumber () {
+    this.moveNumber -= 1;    
+  }
+
+  getArrangementForMoveNumber (moveNumber) {    
+    return moveNumber > 0 ? this.arrangementHistory[moveNumber-1] : this.arrangementHistory[0];
+  }
+
+  // Save arrangement of all the pieces on the board each move
+  // This way we can always go back as desired
+  saveArrangement () {
+    const pieces = new Pieces (this.boardEl);
+    const currentArrangement = pieces.getArrangement ();     
+    this.arrangementHistory = currentArrangement;    
+  }
+
   // Toggle between black or white after each move
-  switchMove () {
+  switchMove () {    
     const { colors } = this.props ();
     const newColor = colors.find (m=>m!=this.currentColor);        
     
@@ -82,14 +130,17 @@ class Moves extends Move {
     // Switch to color to the other player
     this.currentColor = newColor;  
   }
+
   currentPosition (el) {
     const div = el.tagName === 'IMG' ? el.parentElement : el;
     return div.id;
   }
+
   pieceColor (el) {
     const img = el.tagName === 'DIV' ? el.firstChild : el;
     return img.dataset.color;
   }
+
   // Does this square occupy an existing piece?
   squareHasPiece (el) {
     if (el.tagName === 'DIV') {
@@ -124,7 +175,7 @@ class Moves extends Move {
     // Piece not allowed to occupy a space already occupied by same colored piece
     if (this.isMovingToSameColor (prevEl, newEl)) {      
       return false;
-    }
+    }    
     return true;
   }   
 }

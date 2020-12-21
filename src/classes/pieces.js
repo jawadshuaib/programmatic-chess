@@ -60,7 +60,10 @@ class Piece {
     const boardEl = this.boardEl;
     return { boardEl, pieces, colors}
   }
-
+  translateNameToAlias (name) {
+    const { pieces } = this.props ();
+    return pieces.find (piece => piece.name === name).alias;  
+  }
   // create a class name based on piece and color
   className (color, alias) {
     alias = alias.toLowerCase ();    
@@ -143,7 +146,7 @@ class Pieces extends Piece {
   }
 
   arrange (arrangement) {
-    
+    this.clear ();
     arrangement = arrangement || this.preset ().filter (el => el.playAs == this.playAs)[0];
    
     // Arrange white pieces
@@ -164,14 +167,17 @@ class Pieces extends Piece {
   // Remove all the pieces on the board
   clear () {
     const { boardEl } = this.props();
-    const squareClass = 'square';
+    // const squareClass = 'square';
     
-    boardEl.querySelectorAll ('div').forEach (square => {      
-      const classes = square.classList;
-      classes.forEach (thisClass => {
-        if (thisClass !== squareClass) 
-          square.classList.remove (thisClass);        
-      });      
+    boardEl.querySelectorAll ('div').forEach (div => {      
+      if (div.childElementCount > 0)
+        div.firstChild.remove ();        
+      
+      // const classes = square.classList;
+      // classes.forEach (thisClass => {
+      //   if (thisClass !== squareClass) 
+      //     square.classList.remove (thisClass);        
+      // });      
     });
 
     return this;
@@ -184,5 +190,28 @@ class Pieces extends Piece {
 
     return { piece, position };
   }
+
+  // Get arrangement of all the pieces on the board
+  getArrangement () {
+    const { boardEl } = this.props ();
+    const pieces = boardEl.getElementsByClassName ('piece');    
+    const whiteArrangement = [], blackArrangement = [];    
+
+    Array.from (pieces).forEach (piece => {      
+      const p = Array.from(piece.parentElement.classList).find (c => c !== 'square');      
+      const color = p.split ('-')[0];
+      const name = p.split ('-')[1];
+      const alias = this.translateNameToAlias (name);
+      const position = piece.parentElement.id.split ("-")[2];
+
+      if (color === 'white') {
+        whiteArrangement.push (`${alias}${position}`);
+      }
+      else if (color === 'black') {
+        blackArrangement.push (`${alias}${position}`);
+      }      
+    });    
+    return { whiteArrangement, blackArrangement};
+  }  
 }
 export { Pieces as default };

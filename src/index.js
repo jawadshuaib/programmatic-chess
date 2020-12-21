@@ -13,8 +13,19 @@ const pieces = new Pieces (boardEl, playAs, draggable);
 board.draw ();
 pieces.arrange ();
 
-// Check for legal moves
-new Moves (boardEl, pieces.playAs);
+// Check for legal moves and setup drag/drop
+const moves = new Moves (boardEl, pieces.playAs);
+
+// Previous button
+let moveNumber;
+document.getElementById ('prev').addEventListener ('click', () => {
+  moveNumber = moves.moveNumber;
+  const arrangement = moves.getArrangementForMoveNumber (moveNumber);  
+  moves.decrementMoveNumber ();
+  console.log (moveNumber, arrangement);
+  
+  pieces.arrange (arrangement);  
+});
 
 // Programmatically flip the board
 // board.flip();
