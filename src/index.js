@@ -16,15 +16,24 @@ pieces.arrange ();
 // Check for legal moves and setup drag/drop
 const moves = new Moves (boardEl, pieces.playAs);
 
-// Previous button
-let moveNumber;
-document.getElementById ('prev').addEventListener ('click', () => {
-  moveNumber = moves.moveNumber;
-  const arrangement = moves.getArrangementForMoveNumber (moveNumber);  
-  moves.decrementMoveNumber ();
-  console.log (moveNumber, arrangement);
-  
-  pieces.arrange (arrangement);  
+// Previous and Next button
+Array.from (document.getElementsByClassName ('chess-container')).forEach (container => {
+  container.addEventListener ('click', (e) => {
+    const className = e.target.classList[0];
+    if (className === 'history') {                  
+      const action = e.target.dataset['action'];
+      
+      if (action === 'prev') {                
+        moves.decrementMoveNumber ();        
+      }
+      else if (action === 'next') {        
+        moves.incrementMoveNumber ();                         
+      }
+      
+      const arrangement = moves.getArrangementForMoveNumber (moves.moveNumber);    
+      pieces.arrange (arrangement);      
+    }
+  });
 });
 
 // Programmatically flip the board

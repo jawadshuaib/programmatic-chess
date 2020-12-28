@@ -28,11 +28,17 @@ class Moves extends Move {
     this._moveNumber = v;    
   }
   get moveNumber () {
+    if (this.arrangementHistory !== undefined) {
+      const totalHistory = this.arrangementHistory.length;
+      if (this._moveNumber > totalHistory)
+        return totalHistory;
+    }
     return this._moveNumber === undefined || this._moveNumber < 0 ? 0 : this._moveNumber;
   }
   set arrangementHistory (v) {    
     if (this._arrangementHistory === undefined) {
       this._arrangementHistory = new Array (v);
+      // this._arrangementHistory.push (this.currentArrangement ());      
     } else {
       this._arrangementHistory.push (v);
     }    
@@ -42,11 +48,13 @@ class Moves extends Move {
   }  
 
   constructor (boardEl, playAs) {
-    super (boardEl);
-
+    super (boardEl);    
     this.boardEl = boardEl;   
     this.playAs = playAs;
     this.currentColor = this.playAs;    
+    
+    this.saveArrangement ();
+    this.incrementMoveNumber ();
     this.setupDrop ();        
   }
 
@@ -58,10 +66,7 @@ class Moves extends Move {
       const thisEl = e.target;
       if ((thisEl.classList.contains (['square'])) || (thisEl.classList.contains (['piece']))) {
                         
-        if (self.canMove(this.dragged, thisEl)) {
-          // Save arrangement of all the pieces
-          self.saveArrangement ();
-
+        if (self.canMove(this.dragged, thisEl)) {          
           // If the piece is dragged over another piece, it should be removed  
           if (thisEl.classList.contains ('piece')) {      
             thisEl.src = this.dragged.src;
@@ -81,7 +86,10 @@ class Moves extends Move {
           thisEl.appendChild (this.dragged);
           // Add class for the piece to the new space
           thisEl.classList.add (pieceName);
-          
+
+          // Save arrangement of all the pieces
+          self.saveArrangement ();
+
           // Increment move
           self.incrementMoveNumber ();          
         }       
@@ -98,15 +106,18 @@ class Moves extends Move {
   }
 
   getArrangementForMoveNumber (moveNumber) {    
-    return moveNumber > 0 ? this.arrangementHistory[moveNumber-1] : this.arrangementHistory[0];
+    return moveNumber > 0 ? this.arrangementHistory[moveNumber-1] : this.currentArrangement();
+  }
+
+  currentArrangement () {
+    const pieces = new Pieces (this.boardEl);
+    return pieces.getArrangement ();    
   }
 
   // Save arrangement of all the pieces on the board each move
   // This way we can always go back as desired
-  saveArrangement () {
-    const pieces = new Pieces (this.boardEl);
-    const currentArrangement = pieces.getArrangement ();     
-    this.arrangementHistory = currentArrangement;    
+  saveArrangement () {        
+    this.arrangementHistory = this.currentArrangement();    
   }
 
   // Toggle between black or white after each move

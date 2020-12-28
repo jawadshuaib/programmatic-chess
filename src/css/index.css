@@ -4,10 +4,12 @@ body {
   display: flex;
   justify-content: center;
 }
-#chess {
-  /* z-index: 1;
-  position: absolute; */
+
+.chess-container {
+  z-index: 1;
+  position: absolute;
 }
+
 #notations {
   display: block;
 }
@@ -35,15 +37,16 @@ body {
   clear: left;
 }
 
-#chess .notation {
-  /* z-index: 2;
+.chess-container .notation {
+  z-index: 2;
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%); */
+  transform: translate(-50%, -50%);
   color: #900606;
   font-size: 100px;
   opacity: 0.7;
+  pointer-events: none;
 }
 
 @media screen and (max-width: 800px) {
@@ -64,5 +67,12 @@ body {
   .layout div {
     width: 25px;
     height: 25px;
+  }
+}
+
+@media screen and (max-width: 320px) {
+  .layout div {
+    width: 20px;
+    height: 20px;
   }
 }
